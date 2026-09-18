@@ -21,6 +21,11 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    # deploy部署失败新增
+    permissions:
+      id-token: write
+      pages: write
+    # 新增结束
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
