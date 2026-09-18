@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="192" height="192">
+  <!-- 缝纫空间 · 应用图标（樱花粉主题） -->
+  <!-- 圆形底 + 缝纫线轴图样 -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFD9E2"/>
+      <stop offset="100%" stop-color="#F8B4C8"/>
+    </linearGradient>
+  </defs>
+  <!-- 圆角矩形背景 -->
+  <rect x="0" y="0" width="192" height="192" rx="42" ry="42" fill="url(#bg)"/>
+  <!-- 线轴主体（上半圆 + 下半圆 + 中间线） -->
+  <g transform="translate(96,96)" fill="#FFF5F7" stroke="#E891A8" stroke-width="3">
+    <!-- 上半圆 -->
+    <path d="M -44,-12 A 44,28 0 0 1 44,-12 L 44,-20 A 44,28 0 0 0 -44,-20 Z"/>
+    <!-- 中间圆柱体 -->
+    <rect x="-44" y="-12" width="88" height="24"/>
+    <!-- 下半圆 -->
+    <path d="M -44,12 A 44,28 0 0 0 44,12 L 44,20 A 44,28 0 0 1 -44,20 Z"/>
+    <!-- 中心缝纫孔 -->
+    <ellipse cx="0" cy="0" rx="6" ry="12" fill="#E891A8"/>
+  </g>
+  <!-- 飘出的缝纫线（小装饰） -->
+  <path d="M 30,60 Q 50,50 70,40" stroke="#FFF5F7" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
+  <path d="M 122,152 Q 142,162 162,172" stroke="#FFF5F7" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
+</svg>

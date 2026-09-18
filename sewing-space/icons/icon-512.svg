@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- 缝纫空间 · 应用图标 512（樱花粉主题） -->
+  <defs>
+    <linearGradient id="bg512" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFD9E2"/>
+      <stop offset="100%" stop-color="#F8B4C8"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="512" height="512" rx="112" ry="112" fill="url(#bg512)"/>
+  <g transform="translate(256,256)" fill="#FFF5F7" stroke="#E891A8" stroke-width="8">
+    <path d="M -118,-32 A 118,75 0 0 1 118,-32 L 118,-54 A 118,75 0 0 0 -118,-54 Z"/>
+    <rect x="-118" y="-32" width="236" height="64"/>
+    <path d="M -118,32 A 118,75 0 0 0 118,32 L 118,54 A 118,75 0 0 1 -118,54 Z"/>
+    <ellipse cx="0" cy="0" rx="16" ry="32" fill="#E891A8"/>
+  </g>
+  <path d="M 80,160 Q 130,140 180,120" stroke="#FFF5F7" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.7"/>
+  <path d="M 332,400 Q 380,420 432,440" stroke="#FFF5F7" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.7"/>
+</svg>

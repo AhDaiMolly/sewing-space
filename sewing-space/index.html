@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <meta name="theme-color" content="#F8B4C8" />
+  <meta name="description" content="缝纫空间 · 你的私人缝纫仓库与工作台" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="缝纫空间" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="format-detection" content="telephone=no" />
+
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icons/icon-192.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icons/icon-192.svg" />
+
+  <title>缝纫空间</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!--
+    缝纫空间 · M1.1 工程骨架
+    纯静态 PWA，无框架无构建工具。
+    入口：index.html → main.js
+    数据：Dexie (vendor/dexie.min.js) + IndexedDB
+    路由：hash-based SPA（#/, #/materials, #/garments, #/workbench, #/settings）
+    离线：service worker (sw.js) Cache-First for static, Network-First for HTML
+  -->
+  <div id="app" class="app-shell" aria-busy="true">
+    <header id="app-header" class="app-header" hidden>
+      <button id="back-btn" class="back-btn" hidden aria-label="返回">‹</button>
+      <h1 id="page-title" class="page-title"></h1>
+      <span class="header-spacer"></span>
+    </header>
+
+    <main id="page-root" class="page-root" role="main">
+      <!-- 启动加载占位 -->
+      <div class="boot-screen">
+        <div class="boot-logo">缝纫空间</div>
+        <div class="boot-hint">正在加载…</div>
+      </div>
+    </main>
+
+    <nav id="bottom-nav" class="bottom-nav" hidden aria-label="主导航"></nav>
+
+    <!-- 离线提示横幅 -->
+    <div id="offline-banner" class="offline-banner" hidden>当前离线 · 数据来自缓存</div>
+  </div>
+
+  <!-- 第三方库：Dexie（IndexedDB 封装）+ JSZip（zip 打包/解压，M1.5 下半） -->
+  <script src="vendor/dexie.min.js"></script>
+  <script src="vendor/jszip.min.js"></script>
+
+  <!-- 应用脚本：按顺序加载（无打包器） -->
+  <script src="js/utils.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/pages.js"></script>
+  <script src="js/router.js"></script>
+  <script src="js/backup.js"></script>
+  <script src="js/app.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
