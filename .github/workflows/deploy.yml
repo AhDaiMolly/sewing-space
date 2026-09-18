@@ -1,0 +1,43 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# 最小权限：仅读仓库内容即可完成 Pages 部署
+permissions:
+  contents: read
+
+# 防并发：上一次部署未完成时取消本次
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+# 此仓库作为 Project Pages（访问 https://<user>.github.io/sewing-space/）；
+# 因此 Pages 源选「GitHub Actions」，artifact 路径必须是 sewing-space/。
+# 如要改成 User Pages（访问 https://<user>.github.io/）或其他子路径，
+# 请同步调整 Repository → Settings → Pages 的部署源与本 workflow 的 path。
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # sewing-space/ 是 PWA 入口所在子目录
+          path: 'sewing-space'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
