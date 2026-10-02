@@ -1,0 +1,12 @@
+@import './styles/styles.css';
+@import './styles/styles-batch3.css';
+@import './styles/styles-batch4.css';
+
+@tailwind utilities;
+
+/* 本工程补齐项：demo 引用了但未定义（§11.3）。不写进 styles*.css，以保持那三份与 demo 逐字节相同 */
+:root {
+  --muted: #999999;
+  --warning: #E8A33D;
+  --border-light: #FFF0F4;
+}
