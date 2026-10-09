@@ -1,0 +1,72 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# 最小权限：仅读仓库内容即可完成 Pages 部署
+permissions:
+  contents: read
+
+# 防并发：上一次部署未完成时取消本次
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    # 部署阶段需要写 Pages 与签发 OIDC token
+    permissions:
+      id-token: write
+      pages: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        # 首次用 install：本工程尚无 package-lock.json，npm ci 会直接失败。
+        # package-lock.json 提交后，本行可改为 `npm ci`（严格按 lockfile 安装，构建可重现）。
+        run: npm install
+
+      # AF-A Q1：构建期注入版本号「日期 + run_number」——run_number 全局单调
+      # 递增，每次部署必然不同，杜绝忘 bump 导致关于页版本号不变（东八区日期）。
+      - name: Build version (date + run_number)
+        run: echo "SEWING_VERSION=$(TZ=Asia/Shanghai date +%Y.%m.%d).${{ github.run_number }}" >> "$GITHUB_ENV"
+
+      - name: Build
+        run: npm run build
+
+      # AF-B P2-2：防回归断言——版本注入真实落进 dist 产物。若有人只改了
+      # vite.config.ts 而 .js（Vite 优先加载）里的 define 被误删 / 失效，
+      # 或 define 键与 src/lib/version.ts 失配，此步 grep 不到注入值即失败，
+      # 阻断一次「版本号静默不更新」的发布。
+      - name: Assert version injected into dist
+        run: |
+          if ! grep -rq "$SEWING_VERSION" dist/; then
+            echo "::error::dist/ 中未找到注入的版本号 $SEWING_VERSION——版本注入链路失效（检查 vite.config.js 的 define）"
+            exit 1
+          fi
+          echo "版本注入断言通过：dist/ 含 $SEWING_VERSION"
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'dist'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
